@@ -249,8 +249,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
             serverSock.bind(sa, getAcceptCount());
             if (getUnixDomainSocketPathPermissions() != null) {
                 Path path = Paths.get(getUnixDomainSocketPath());
-                Set<PosixFilePermission> permissions =
-                        PosixFilePermissions.fromString(getUnixDomainSocketPathPermissions());
+                Set<PosixFilePermission> permissions = PosixFilePermissions.fromString(getUnixDomainSocketPathPermissions());
                 if (path.getFileSystem().supportedFileAttributeViews().contains("posix")) {
                     FileAttribute<Set<PosixFilePermission>> attrs = PosixFilePermissions.asFileAttribute(permissions);
                     Files.setAttribute(path, attrs.name(), attrs.value());
@@ -285,25 +284,27 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
             paused = false;
 
             if (socketProperties.getProcessorCache() != 0) {
-                processorCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                        socketProperties.getProcessorCache());
+                processorCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE, socketProperties.getProcessorCache());
             }
             if (socketProperties.getEventCache() != 0) {
-                eventCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                        socketProperties.getEventCache());
+                eventCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE, socketProperties.getEventCache());
             }
             if (socketProperties.getBufferPool() != 0) {
-                nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                        socketProperties.getBufferPool());
+                nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,socketProperties.getBufferPool());
             }
 
             // Create worker collection
             if (getExecutor() == null) {
+                /**
+                 * 创建线程池
+                 */
                 createExecutor();
             }
 
             initializeConnectionLatch();
-
+            /**
+             * TODO poller和acceptor什么区别？
+             */
             // Start poller thread
             poller = new Poller();
             Thread pollerThread = new Thread(poller, getName() + "-Poller");
@@ -597,8 +598,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
     public class Poller implements Runnable {
 
         private Selector selector;
-        private final SynchronizedQueue<PollerEvent> events =
-                new SynchronizedQueue<>();
+        private final SynchronizedQueue<PollerEvent> events =  new SynchronizedQueue<>();
 
         private volatile boolean close = false;
         // Optimize expiration handling
@@ -808,8 +808,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                     continue;
                 }
 
-                Iterator<SelectionKey> iterator =
-                    keyCount > 0 ? selector.selectedKeys().iterator() : null;
+                Iterator<SelectionKey> iterator = keyCount > 0 ? selector.selectedKeys().iterator() : null;
                 // Walk through the collection of ready keys and dispatch
                 // any active event.
                 while (iterator != null && iterator.hasNext()) {

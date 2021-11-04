@@ -257,9 +257,7 @@ class AsyncStateMachine {
         if (state==AsyncState.STARTED) {
             updateState(AsyncState.READ_WRITE_OP);
         } else {
-            throw new IllegalStateException(
-                    sm.getString("asyncStateMachine.invalidAsyncState",
-                            "asyncOperation()", state));
+            throw new IllegalStateException(sm.getString("asyncStateMachine.invalidAsyncState","asyncOperation()", state));
         }
     }
 

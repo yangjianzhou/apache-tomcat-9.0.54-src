@@ -156,8 +156,7 @@ public abstract class LifecycleBase implements Lifecycle {
     @Override
     public final synchronized void start() throws LifecycleException {
 
-        if (LifecycleState.STARTING_PREP.equals(state) || LifecycleState.STARTING.equals(state) ||
-                LifecycleState.STARTED.equals(state)) {
+        if (LifecycleState.STARTING_PREP.equals(state) || LifecycleState.STARTING.equals(state) || LifecycleState.STARTED.equals(state)) {
 
             if (log.isDebugEnabled()) {
                 Exception e = new LifecycleException();
@@ -165,7 +164,6 @@ public abstract class LifecycleBase implements Lifecycle {
             } else if (log.isInfoEnabled()) {
                 log.info(sm.getString("lifecycleBase.alreadyStarted", toString()));
             }
-
             return;
         }
 
@@ -173,8 +171,7 @@ public abstract class LifecycleBase implements Lifecycle {
             init();
         } else if (state.equals(LifecycleState.FAILED)) {
             stop();
-        } else if (!state.equals(LifecycleState.INITIALIZED) &&
-                !state.equals(LifecycleState.STOPPED)) {
+        } else if (!state.equals(LifecycleState.INITIALIZED) && !state.equals(LifecycleState.STOPPED)) {
             invalidTransition(Lifecycle.BEFORE_START_EVENT);
         }
 

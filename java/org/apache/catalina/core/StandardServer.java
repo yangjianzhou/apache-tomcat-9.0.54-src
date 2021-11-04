@@ -256,13 +256,10 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
     public void setGlobalNamingResources
         (NamingResourcesImpl globalNamingResources) {
 
-        NamingResourcesImpl oldGlobalNamingResources =
-            this.globalNamingResources;
+        NamingResourcesImpl oldGlobalNamingResources = this.globalNamingResources;
         this.globalNamingResources = globalNamingResources;
         this.globalNamingResources.setContainer(this);
-        support.firePropertyChange("globalNamingResources",
-                                   oldGlobalNamingResources,
-                                   this.globalNamingResources);
+        support.firePropertyChange("globalNamingResources", oldGlobalNamingResources, this.globalNamingResources);
 
     }
 
@@ -323,8 +320,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
     @Override
     public void setPortOffset(int portOffset) {
         if (portOffset < 0) {
-            throw new IllegalArgumentException(
-                    sm.getString("standardServer.portOffset.invalid", Integer.valueOf(portOffset)));
+            throw new IllegalArgumentException( sm.getString("standardServer.portOffset.invalid", Integer.valueOf(portOffset)));
         }
         this.portOffset = portOffset;
     }
@@ -573,8 +569,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
 
         // Set up a server socket to wait on
         try {
-            awaitSocket = new ServerSocket(getPortWithOffset(), 1,
-                    InetAddress.getByName(address));
+            awaitSocket = new ServerSocket(getPortWithOffset(), 1, InetAddress.getByName(address));
         } catch (IOException e) {
             log.error(sm.getString("standardServer.awaitSocket.fail", address,
                     String.valueOf(getPortWithOffset()), String.valueOf(getPort()),
@@ -929,8 +924,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         }
 
         if (periodicEventDelay > 0) {
-            monitorFuture = getUtilityExecutor().scheduleWithFixedDelay(
-                    () -> startPeriodicLifecycleEvent(), 0, 60, TimeUnit.SECONDS);
+            monitorFuture = getUtilityExecutor().scheduleWithFixedDelay( () -> startPeriodicLifecycleEvent(), 0, 60, TimeUnit.SECONDS);
         }
     }
 

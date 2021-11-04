@@ -285,16 +285,13 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
             paused = false;
 
             if (socketProperties.getProcessorCache() != 0) {
-                processorCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                        socketProperties.getProcessorCache());
+                processorCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE, socketProperties.getProcessorCache());
             }
             if (socketProperties.getEventCache() != 0) {
-                eventCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                        socketProperties.getEventCache());
+                eventCache = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE, socketProperties.getEventCache());
             }
             if (socketProperties.getBufferPool() != 0) {
-                nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,
-                        socketProperties.getBufferPool());
+                nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,socketProperties.getBufferPool());
             }
 
             // Create worker collection
@@ -808,8 +805,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                     continue;
                 }
 
-                Iterator<SelectionKey> iterator =
-                    keyCount > 0 ? selector.selectedKeys().iterator() : null;
+                Iterator<SelectionKey> iterator = keyCount > 0 ? selector.selectedKeys().iterator() : null;
                 // Walk through the collection of ready keys and dispatch
                 // any active event.
                 while (iterator != null && iterator.hasNext()) {

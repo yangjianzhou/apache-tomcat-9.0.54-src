@@ -51,8 +51,7 @@ import org.apache.tomcat.util.net.SocketEvent;
 import org.apache.tomcat.util.net.SocketWrapperBase;
 import org.apache.tomcat.util.res.StringManager;
 
-public abstract class AbstractProtocol<S> implements ProtocolHandler,
-        MBeanRegistration {
+public abstract class AbstractProtocol<S> implements ProtocolHandler, MBeanRegistration {
 
     /**
      * The string manager for this package.
@@ -791,8 +790,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
         @Override
         public SocketState process(SocketWrapperBase<S> wrapper, SocketEvent status) {
             if (getLog().isDebugEnabled()) {
-                getLog().debug(sm.getString("abstractConnectionHandler.process",
-                        wrapper.getSocket(), status));
+                getLog().debug(sm.getString("abstractConnectionHandler.process",wrapper.getSocket(), status));
             }
             if (wrapper == null) {
                 // Nothing to do. Socket has been closed.
@@ -803,8 +801,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
 
             Processor processor = (Processor) wrapper.getCurrentProcessor();
             if (getLog().isDebugEnabled()) {
-                getLog().debug(sm.getString("abstractConnectionHandler.connectionsGet",
-                        processor, socket));
+                getLog().debug(sm.getString("abstractConnectionHandler.connectionsGet", processor, socket));
             }
 
             // Timeouts are calculated on a dedicated thread and then
@@ -884,8 +881,7 @@ public abstract class AbstractProtocol<S> implements ProtocolHandler,
                 }
 
                 // Can switch to non-deprecated version in Tomcat 10.1.x
-                processor.setSslSupport(
-                        wrapper.getSslSupport(getProtocol().getClientCertProvider()));
+                processor.setSslSupport( wrapper.getSslSupport(getProtocol().getClientCertProvider()));
 
                 // Associate the processor with the connection
                 wrapper.setCurrentProcessor(processor);

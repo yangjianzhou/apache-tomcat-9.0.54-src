@@ -297,8 +297,7 @@ public final class Bootstrap {
             param = new Object[1];
             param[0] = arguments;
         }
-        Method method =
-            catalinaDaemon.getClass().getMethod(methodName, paramTypes);
+        Method method = catalinaDaemon.getClass().getMethod(methodName, paramTypes);
         if (log.isDebugEnabled()) {
             log.debug("Calling startup class " + method);
         }

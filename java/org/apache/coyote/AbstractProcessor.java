@@ -264,9 +264,7 @@ public abstract class AbstractProcessor extends AbstractProcessorLight implement
         }
 
         if (getLog().isDebugEnabled()) {
-            getLog().debug("Socket: [" + socketWrapper +
-                    "], Status in: [" + status +
-                    "], State out: [" + state + "]");
+            getLog().debug("Socket: [" + socketWrapper + "], Status in: [" + status + "], State out: [" + state + "]");
         }
 
         return state;

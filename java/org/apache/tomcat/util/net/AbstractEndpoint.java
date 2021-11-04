@@ -1149,8 +1149,7 @@ public abstract class AbstractEndpoint<S,U> {
      *
      * @return if processing was triggered successfully
      */
-    public boolean processSocket(SocketWrapperBase<S> socketWrapper,
-            SocketEvent event, boolean dispatch) {
+    public boolean processSocket(SocketWrapperBase<S> socketWrapper, SocketEvent event, boolean dispatch) {
         try {
             if (socketWrapper == null) {
                 return false;
@@ -1164,6 +1163,9 @@ public abstract class AbstractEndpoint<S,U> {
             } else {
                 sc.reset(socketWrapper, event);
             }
+            /**
+             * 处理poller接受的请求
+             */
             Executor executor = getExecutor();
             if (dispatch && executor != null) {
                 executor.execute(sc);
@@ -1184,8 +1186,7 @@ public abstract class AbstractEndpoint<S,U> {
     }
 
 
-    protected abstract SocketProcessorBase<S> createSocketProcessor(
-            SocketWrapperBase<S> socketWrapper, SocketEvent event);
+    protected abstract SocketProcessorBase<S> createSocketProcessor(SocketWrapperBase<S> socketWrapper, SocketEvent event);
 
 
     // ------------------------------------------------------- Lifecycle methods
@@ -1226,8 +1227,7 @@ public abstract class AbstractEndpoint<S,U> {
             oname = new ObjectName(domain + ":type=ThreadPool,name=\"" + getName() + "\"");
             Registry.getRegistry(null, null).registerComponent(this, oname, null);
 
-            ObjectName socketPropertiesOname = new ObjectName(domain +
-                    ":type=SocketProperties,name=\"" + getName() + "\"");
+            ObjectName socketPropertiesOname = new ObjectName(domain + ":type=SocketProperties,name=\"" + getName() + "\"");
             socketProperties.setObjectName(socketPropertiesOname);
             Registry.getRegistry(null, null).registerComponent(socketProperties, socketPropertiesOname, null);
 
@@ -1357,10 +1357,10 @@ public abstract class AbstractEndpoint<S,U> {
     protected abstract Log getLog();
 
     protected LimitLatch initializeConnectionLatch() {
-        if (maxConnections==-1) {
+        if (maxConnections == -1) {
             return null;
         }
-        if (connectionLimitLatch==null) {
+        if (connectionLimitLatch == null) {
             connectionLimitLatch = new LimitLatch(getMaxConnections());
         }
         return connectionLimitLatch;
@@ -1375,11 +1375,11 @@ public abstract class AbstractEndpoint<S,U> {
     }
 
     protected void countUpOrAwaitConnection() throws InterruptedException {
-        if (maxConnections==-1) {
+        if (maxConnections == -1) {
             return;
         }
         LimitLatch latch = connectionLimitLatch;
-        if (latch!=null) {
+        if (latch != null) {
             latch.countUpOrAwait();
         }
     }
