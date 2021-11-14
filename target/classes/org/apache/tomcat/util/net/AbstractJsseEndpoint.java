@@ -73,8 +73,7 @@ public abstract class AbstractJsseEndpoint<S,U> extends AbstractEndpoint<S,U> {
 
             // Validate default SSLHostConfigName
             if (sslHostConfigs.get(getDefaultSSLHostConfigName()) == null) {
-                throw new IllegalArgumentException(sm.getString("endpoint.noSslHostConfig",
-                        getDefaultSSLHostConfigName(), getName()));
+                throw new IllegalArgumentException(sm.getString("endpoint.noSslHostConfig", getDefaultSSLHostConfigName(), getName()));
             }
 
         }

@@ -249,8 +249,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
             serverSock.bind(sa, getAcceptCount());
             if (getUnixDomainSocketPathPermissions() != null) {
                 Path path = Paths.get(getUnixDomainSocketPath());
-                Set<PosixFilePermission> permissions =
-                        PosixFilePermissions.fromString(getUnixDomainSocketPathPermissions());
+                Set<PosixFilePermission> permissions = PosixFilePermissions.fromString(getUnixDomainSocketPathPermissions());
                 if (path.getFileSystem().supportedFileAttributeViews().contains("posix")) {
                     FileAttribute<Set<PosixFilePermission>> attrs = PosixFilePermissions.asFileAttribute(permissions);
                     Files.setAttribute(path, attrs.name(), attrs.value());
@@ -296,11 +295,16 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
 
             // Create worker collection
             if (getExecutor() == null) {
+                /**
+                 * 创建线程池
+                 */
                 createExecutor();
             }
 
             initializeConnectionLatch();
-
+            /**
+             * TODO poller和acceptor什么区别？
+             */
             // Start poller thread
             poller = new Poller();
             Thread pollerThread = new Thread(poller, getName() + "-Poller");
@@ -594,8 +598,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
     public class Poller implements Runnable {
 
         private Selector selector;
-        private final SynchronizedQueue<PollerEvent> events =
-                new SynchronizedQueue<>();
+        private final SynchronizedQueue<PollerEvent> events =  new SynchronizedQueue<>();
 
         private volatile boolean close = false;
         // Optimize expiration handling

@@ -256,5 +256,4 @@ public interface ProtocolHandler {
         }
     }
 
-
 }

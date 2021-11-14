@@ -551,6 +551,7 @@ public abstract class AbstractEndpoint<S,U> {
 
     /**
      * External Executor based thread pool for utility tasks.
+     * TODO 这个线程池是干嘛的
      */
     private ScheduledExecutorService utilityExecutor = null;
     public void setUtilityExecutor(ScheduledExecutorService utilityExecutor) {

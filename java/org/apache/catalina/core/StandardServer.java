@@ -988,6 +988,9 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
         super.initInternal();
 
         // Initialize utility executor
+        /**
+         * TODO 这个线程池是干嘛的？
+         */
         reconfigureUtilityExecutor(getUtilityThreadsInternal(utilityThreads));
         register(utilityExecutor, "type=UtilityExecutor");
 
@@ -1018,8 +1021,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
                         if (url.getProtocol().equals("file")) {
                             try {
                                 File f = new File (url.toURI());
-                                if (f.isFile() &&
-                                        f.getName().endsWith(".jar")) {
+                                if (f.isFile() &&f.getName().endsWith(".jar")) {
                                     ExtensionValidator.addSystemResource(f);
                                 }
                             } catch (URISyntaxException | IOException e) {

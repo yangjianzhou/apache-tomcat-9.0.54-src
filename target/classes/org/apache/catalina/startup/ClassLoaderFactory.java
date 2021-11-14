@@ -198,8 +198,7 @@ public final class ClassLoaderFactory {
                         continue;
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("  Including directory glob "
-                            + directory.getAbsolutePath());
+                        log.debug("  Including directory glob " + directory.getAbsolutePath());
                     }
                     String filenames[] = directory.list();
                     if (filenames == null) {
@@ -216,8 +215,7 @@ public final class ClassLoaderFactory {
                             continue;
                         }
                         if (log.isDebugEnabled()) {
-                            log.debug("    Including glob jar file "
-                                    + file.getAbsolutePath());
+                            log.debug("    Including glob jar file " + file.getAbsolutePath());
                         }
                         URL url = buildClassLoaderUrl(file);
                         set.add(url);

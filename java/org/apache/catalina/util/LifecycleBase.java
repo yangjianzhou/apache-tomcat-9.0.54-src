@@ -403,12 +403,9 @@ public abstract class LifecycleBase implements Lifecycle {
             // stopInternal() permits STOPPING_PREP to STOPPING and FAILED to
             // STOPPING
             if (!(state == LifecycleState.FAILED ||
-                    (this.state == LifecycleState.STARTING_PREP &&
-                            state == LifecycleState.STARTING) ||
-                    (this.state == LifecycleState.STOPPING_PREP &&
-                            state == LifecycleState.STOPPING) ||
-                    (this.state == LifecycleState.FAILED &&
-                            state == LifecycleState.STOPPING))) {
+                    (this.state == LifecycleState.STARTING_PREP && state == LifecycleState.STARTING) ||
+                    (this.state == LifecycleState.STOPPING_PREP && state == LifecycleState.STOPPING) ||
+                    (this.state == LifecycleState.FAILED && state == LifecycleState.STOPPING))) {
                 // No other transition permitted
                 invalidTransition(state.name());
             }

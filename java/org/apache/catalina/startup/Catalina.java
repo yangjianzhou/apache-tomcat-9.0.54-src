@@ -382,8 +382,17 @@ public class Catalina {
         digester.setUseContextClassLoader(true);
 
         // Configure the actions we will be using
+        /**
+         * 创建StandardServer实例
+         */
         digester.addObjectCreate("Server","org.apache.catalina.core.StandardServer","className");
+        /**
+         * 将server标签中的属性设置到server实例中
+         */
         digester.addSetProperties("Server");
+        /**
+         * 将通过调用Catalina的setServer，将server设置到catalina中
+         */
         digester.addSetNext("Server","setServer","org.apache.catalina.Server");
 
         digester.addObjectCreate("Server/GlobalNamingResources","org.apache.catalina.deploy.NamingResourcesImpl");
@@ -392,26 +401,40 @@ public class Catalina {
 
         digester.addRule("Server/Listener",new ListenerCreateRule(null, "className"));
         digester.addSetProperties("Server/Listener");
+        /**
+         * 调用standardServer中的addLifecycleListener方法，将listener设置进去
+         */
         digester.addSetNext("Server/Listener","addLifecycleListener","org.apache.catalina.LifecycleListener");
 
         digester.addObjectCreate("Server/Service","org.apache.catalina.core.StandardService","className");
         digester.addSetProperties("Server/Service");
+        /**
+         * 调用standardServer的addService方法，将service设置到standardServer中
+         */
         digester.addSetNext("Server/Service","addService","org.apache.catalina.Service");
 
         digester.addObjectCreate("Server/Service/Listener",
                                  null, // MUST be specified in the element
                                  "className");
         digester.addSetProperties("Server/Service/Listener");
+        /**
+         * 调用StandardService的addLifecycleListener方法，将listener设置进去
+         */
         digester.addSetNext("Server/Service/Listener","addLifecycleListener","org.apache.catalina.LifecycleListener");
 
         //Executor
         digester.addObjectCreate("Server/Service/Executor","org.apache.catalina.core.StandardThreadExecutor","className");
         digester.addSetProperties("Server/Service/Executor");
-
+        /**
+         * 调用StandardService的addExecutor方法，将executor设置进去
+         */
         digester.addSetNext("Server/Service/Executor","addExecutor","org.apache.catalina.Executor");
 
         digester.addRule("Server/Service/Connector", new ConnectorCreateRule());
         digester.addSetProperties("Server/Service/Connector", new String[]{"executor", "sslImplementationName", "protocol"});
+        /**
+         * 调用StandardService的addConnector方法，将connector实例设置进去
+         */
         digester.addSetNext("Server/Service/Connector","addConnector","org.apache.catalina.connector.Connector");
 
         digester.addRule("Server/Service/Connector", new AddPortOffsetRule());
@@ -555,6 +578,9 @@ public class Catalina {
         } else {
             try (ConfigurationSource.Resource resource = ConfigFileLoader.getSource().getServerXml()) {
                 // Create and execute our Digester
+                /**
+                 * 设置server.xml解析规则
+                 */
                 Digester digester = start ? createStartDigester() : createStopDigester();
                 InputStream inputStream = resource.getInputStream();
                 InputSource inputSource = new InputSource(resource.getURI().toURL().toString());
@@ -638,6 +664,8 @@ public class Catalina {
 
     /**
      * Start a new server instance.
+     * 1、解析server.xml文件，并设置对象树
+     * 2、调用standardServer的init方法
      */
     public void load() {
 

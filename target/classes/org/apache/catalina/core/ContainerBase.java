@@ -934,8 +934,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase implements Contai
 
         }
         if (multiThrowable != null) {
-            throw new LifecycleException(sm.getString("containerBase.threadedStartFailed"),
-                    multiThrowable.getThrowable());
+            throw new LifecycleException(sm.getString("containerBase.threadedStartFailed"),multiThrowable.getThrowable());
         }
 
         // Start the Valves in our pipeline (including the basic), if any
@@ -948,8 +947,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase implements Contai
         // Start our thread
         if (backgroundProcessorDelay > 0) {
             monitorFuture = Container.getService(ContainerBase.this).getServer()
-                    .getUtilityExecutor().scheduleWithFixedDelay(
-                            new ContainerBackgroundProcessorMonitor(), 0, 60, TimeUnit.SECONDS);
+                    .getUtilityExecutor().scheduleWithFixedDelay( new ContainerBackgroundProcessorMonitor(), 0, 60, TimeUnit.SECONDS);
         }
     }
 

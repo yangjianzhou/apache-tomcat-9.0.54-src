@@ -73,36 +73,27 @@ public class EngineRuleSet implements RuleSet {
      */
     @Override
     public void addRuleInstances(Digester digester) {
-
-        digester.addObjectCreate(prefix + "Engine",
-                                 "org.apache.catalina.core.StandardEngine",
-                                 "className");
+        /**
+         * prefix = Server/Service/
+         */
+        digester.addObjectCreate(prefix + "Engine","org.apache.catalina.core.StandardEngine","className");
         digester.addSetProperties(prefix + "Engine");
-        digester.addRule(prefix + "Engine",
-                         new LifecycleListenerRule
-                         ("org.apache.catalina.startup.EngineConfig",
-                          "engineConfigClass"));
-        digester.addSetNext(prefix + "Engine",
-                            "setContainer",
-                            "org.apache.catalina.Engine");
+        digester.addRule(prefix + "Engine", new LifecycleListenerRule ("org.apache.catalina.startup.EngineConfig","engineConfigClass"));
+        digester.addSetNext(prefix + "Engine","setContainer","org.apache.catalina.Engine");
 
         //Cluster configuration start
         digester.addObjectCreate(prefix + "Engine/Cluster",
                                  null, // MUST be specified in the element
                                  "className");
         digester.addSetProperties(prefix + "Engine/Cluster");
-        digester.addSetNext(prefix + "Engine/Cluster",
-                            "setCluster",
-                            "org.apache.catalina.Cluster");
+        digester.addSetNext(prefix + "Engine/Cluster","setCluster","org.apache.catalina.Cluster");
         //Cluster configuration end
 
         digester.addObjectCreate(prefix + "Engine/Listener",
                                  null, // MUST be specified in the element
                                  "className");
         digester.addSetProperties(prefix + "Engine/Listener");
-        digester.addSetNext(prefix + "Engine/Listener",
-                            "addLifecycleListener",
-                            "org.apache.catalina.LifecycleListener");
+        digester.addSetNext(prefix + "Engine/Listener","addLifecycleListener","org.apache.catalina.LifecycleListener");
 
 
         digester.addRuleSet(new RealmRuleSet(prefix + "Engine/"));
@@ -111,8 +102,6 @@ public class EngineRuleSet implements RuleSet {
                                  null, // MUST be specified in the element
                                  "className");
         digester.addSetProperties(prefix + "Engine/Valve");
-        digester.addSetNext(prefix + "Engine/Valve",
-                            "addValve",
-                            "org.apache.catalina.Valve");
+        digester.addSetNext(prefix + "Engine/Valve","addValve","org.apache.catalina.Valve");
     }
 }

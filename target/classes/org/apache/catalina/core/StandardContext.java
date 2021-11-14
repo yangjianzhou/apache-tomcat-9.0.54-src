@@ -4989,8 +4989,7 @@ public class StandardContext extends ContainerBase
 
         // Send j2ee.state.starting notification
         if (this.getObjectName() != null) {
-            Notification notification = new Notification("j2ee.state.starting",
-                    this.getObjectName(), sequenceNumber.getAndIncrement());
+            Notification notification = new Notification("j2ee.state.starting",  this.getObjectName(), sequenceNumber.getAndIncrement());
             broadcaster.sendNotification(notification);
         }
 
@@ -5040,8 +5039,7 @@ public class StandardContext extends ContainerBase
         // Validate required extensions
         boolean dependencyCheck = true;
         try {
-            dependencyCheck = ExtensionValidator.validateApplication
-                (getResources(), this);
+            dependencyCheck = ExtensionValidator.validateApplication(getResources(), this);
         } catch (IOException ioe) {
             log.error(sm.getString("standardContext.extensionValidationError"), ioe);
             dependencyCheck = false;
@@ -5054,8 +5052,7 @@ public class StandardContext extends ContainerBase
 
         // Reading the "catalina.useNaming" environment variable
         String useNamingProperty = System.getProperty("catalina.useNaming");
-        if ((useNamingProperty != null)
-            && (useNamingProperty.equals("false"))) {
+        if ((useNamingProperty != null) && (useNamingProperty.equals("false"))) {
             useNaming = false;
         }
 
@@ -5152,9 +5149,7 @@ public class StandardContext extends ContainerBase
                 Manager manager = getManager();
                 if (manager == null) {
                     if (log.isDebugEnabled()) {
-                        log.debug(sm.getString("standardContext.cluster.noManager",
-                                Boolean.valueOf((getCluster() != null)),
-                                Boolean.valueOf(distributable)));
+                        log.debug(sm.getString("standardContext.cluster.noManager", Boolean.valueOf((getCluster() != null)), Boolean.valueOf(distributable)));
                     }
                     if ((getCluster() != null) && distributable) {
                         try {
@@ -5171,8 +5166,7 @@ public class StandardContext extends ContainerBase
                 // Configure default manager if none was specified
                 if (contextManager != null) {
                     if (log.isDebugEnabled()) {
-                        log.debug(sm.getString("standardContext.manager",
-                                contextManager.getClass().getName()));
+                        log.debug(sm.getString("standardContext.manager", contextManager.getClass().getName()));
                     }
                     setManager(contextManager);
                 }
@@ -5191,19 +5185,16 @@ public class StandardContext extends ContainerBase
 
             // We put the resources into the servlet context
             if (ok) {
-                getServletContext().setAttribute
-                    (Globals.RESOURCES_ATTR, getResources());
+                getServletContext().setAttribute(Globals.RESOURCES_ATTR, getResources());
 
                 if (getInstanceManager() == null) {
                     setInstanceManager(createInstanceManager());
                 }
-                getServletContext().setAttribute(
-                        InstanceManager.class.getName(), getInstanceManager());
+                getServletContext().setAttribute(InstanceManager.class.getName(), getInstanceManager());
                 InstanceManagerBindings.bind(getLoader().getClassLoader(), getInstanceManager());
 
                 // Create context attributes that will be required
-                getServletContext().setAttribute(
-                        JarScanner.class.getName(), getJarScanner());
+                getServletContext().setAttribute(JarScanner.class.getName(), getJarScanner());
 
                 // Make the version info available
                 getServletContext().setAttribute(Globals.WEBAPP_VERSION, getWebappVersion());
@@ -5216,8 +5207,7 @@ public class StandardContext extends ContainerBase
             for (Map.Entry<ServletContainerInitializer, Set<Class<?>>> entry :
                 initializers.entrySet()) {
                 try {
-                    entry.getKey().onStartup(entry.getValue(),
-                            getServletContext());
+                    entry.getKey().onStartup(entry.getValue(), getServletContext());
                 } catch (ServletException e) {
                     log.error(sm.getString("standardContext.sciFail"), e);
                     ok = false;
@@ -5287,9 +5277,7 @@ public class StandardContext extends ContainerBase
 
         // Send j2ee.state.running notification
         if (ok && (this.getObjectName() != null)) {
-            Notification notification =
-                new Notification("j2ee.state.running", this.getObjectName(),
-                                 sequenceNumber.getAndIncrement());
+            Notification notification = new Notification("j2ee.state.running", this.getObjectName(), sequenceNumber.getAndIncrement());
             broadcaster.sendNotification(notification);
         }
 
@@ -5304,8 +5292,7 @@ public class StandardContext extends ContainerBase
             setState(LifecycleState.FAILED);
             // Send j2ee.object.failed notification
             if (this.getObjectName() != null) {
-                Notification notification = new Notification("j2ee.object.failed",
-                        this.getObjectName(), sequenceNumber.getAndIncrement());
+                Notification notification = new Notification("j2ee.object.failed", this.getObjectName(), sequenceNumber.getAndIncrement());
                 broadcaster.sendNotification(notification);
             }
         } else {
@@ -5316,9 +5303,7 @@ public class StandardContext extends ContainerBase
 
     private void checkConstraintsForUncoveredMethods(
             SecurityConstraint[] constraints) {
-        SecurityConstraint[] newConstraints =
-                SecurityConstraint.findUncoveredHttpMethods(constraints,
-                        getDenyUncoveredHttpMethods(), getLogger());
+        SecurityConstraint[] newConstraints = SecurityConstraint.findUncoveredHttpMethods(constraints, getDenyUncoveredHttpMethods(), getLogger());
         for (SecurityConstraint constraint : newConstraints) {
             addConstraint(constraint);
         }

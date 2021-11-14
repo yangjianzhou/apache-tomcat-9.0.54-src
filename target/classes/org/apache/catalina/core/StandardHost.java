@@ -827,9 +827,7 @@ public class StandardHost extends ContainerBase implements Host {
                 }
             } catch (Throwable t) {
                 ExceptionUtils.handleThrowable(t);
-                log.error(sm.getString(
-                        "standardHost.invalidErrorReportValveClass",
-                        errorValve), t);
+                log.error(sm.getString("standardHost.invalidErrorReportValveClass",errorValve), t);
             }
         }
         super.startInternal();
