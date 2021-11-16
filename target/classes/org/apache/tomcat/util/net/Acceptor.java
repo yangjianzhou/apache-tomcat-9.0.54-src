@@ -104,6 +104,7 @@ public class Acceptor<U> implements Runnable {
                         // Accept the next incoming connection from the server
                         // socket
                         socket = endpoint.serverSocketAccept();
+                        System.out.println(socket);
                     } catch (Exception ioe) {
                         // We didn't get a socket
                         endpoint.countDownConnection();

@@ -1613,7 +1613,9 @@ public class HostConfig implements LifecycleListener {
             host.setDeployOnStartup(false);
             host.setAutoDeploy(false);
         }
-
+        /**
+         * 部署应用
+         */
         if (host.getDeployOnStartup()) {
             deployApps();
         }

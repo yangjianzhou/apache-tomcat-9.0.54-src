@@ -28,8 +28,7 @@ import org.apache.tomcat.util.threads.TaskQueue;
 import org.apache.tomcat.util.threads.TaskThreadFactory;
 import org.apache.tomcat.util.threads.ThreadPoolExecutor;
 
-public class StandardThreadExecutor extends LifecycleMBeanBase
-        implements Executor, ResizableExecutor {
+public class StandardThreadExecutor extends LifecycleMBeanBase implements Executor, ResizableExecutor {
 
     protected static final StringManager sm = StringManager.getManager(StandardThreadExecutor.class);
 
@@ -118,8 +117,8 @@ public class StandardThreadExecutor extends LifecycleMBeanBase
     protected void startInternal() throws LifecycleException {
 
         taskqueue = new TaskQueue(maxQueueSize);
-        TaskThreadFactory tf = new TaskThreadFactory(namePrefix,daemon,getThreadPriority());
-        executor = new ThreadPoolExecutor(getMinSpareThreads(), getMaxThreads(), maxIdleTime, TimeUnit.MILLISECONDS,taskqueue, tf);
+        TaskThreadFactory tf = new TaskThreadFactory(namePrefix, daemon, getThreadPriority());
+        executor = new ThreadPoolExecutor(getMinSpareThreads(), getMaxThreads(), maxIdleTime, TimeUnit.MILLISECONDS, taskqueue, tf);
         executor.setThreadRenewalDelay(threadRenewalDelay);
         if (prestartminSpareThreads) {
             executor.prestartAllCoreThreads();

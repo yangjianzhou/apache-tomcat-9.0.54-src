@@ -6281,8 +6281,7 @@ public class StandardContext extends ContainerBase
 
         // Send j2ee.object.created notification
         if (this.getObjectName() != null) {
-            Notification notification = new Notification("j2ee.object.created",
-                    this.getObjectName(), sequenceNumber.getAndIncrement());
+            Notification notification = new Notification("j2ee.object.created", this.getObjectName(), sequenceNumber.getAndIncrement());
             broadcaster.sendNotification(notification);
         }
     }

@@ -293,7 +293,9 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 nioChannels = new SynchronizedStack<>(SynchronizedStack.DEFAULT_SIZE,socketProperties.getBufferPool());
             }
 
-            // Create worker collection
+            /**
+             * 如果没有指定线程池，则创建默认的线程池
+             */
             if (getExecutor() == null) {
                 /**
                  * 创建线程池
@@ -303,9 +305,9 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
 
             initializeConnectionLatch();
             /**
-             * TODO poller和acceptor什么区别？
+             * acceptor接收请求，然后将请求转发给poller
+             * poller就会将请求放入到线程池
              */
-            // Start poller thread
             poller = new Poller();
             Thread pollerThread = new Thread(poller, getName() + "-Poller");
             pollerThread.setPriority(threadPriority);
@@ -474,14 +476,14 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 channel = nioChannels.pop();
             }
             if (channel == null) {
-                SocketBufferHandler bufhandler = new SocketBufferHandler(
+                SocketBufferHandler bufHandler = new SocketBufferHandler(
                         socketProperties.getAppReadBufSize(),
                         socketProperties.getAppWriteBufSize(),
                         socketProperties.getDirectBuffer());
                 if (isSSLEnabled()) {
-                    channel = new SecureNioChannel(bufhandler, this);
+                    channel = new SecureNioChannel(bufHandler, this);
                 } else {
-                    channel = new NioChannel(bufhandler);
+                    channel = new NioChannel(bufHandler);
                 }
             }
             NioSocketWrapper newWrapper = new NioSocketWrapper(channel, this);
@@ -771,7 +773,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
          */
         @Override
         public void run() {
-            // Loop until destroy() is called
+            // Loop until destroy() is call
             while (true) {
 
                 boolean hasEvents = false;
@@ -779,12 +781,15 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 try {
                     if (!close) {
                         hasEvents = events();
+                        System.out.println(hasEvents);
                         if (wakeupCounter.getAndSet(-1) > 0) {
                             // If we are here, means we have other stuff to do
                             // Do a non blocking select
                             keyCount = selector.selectNow();
+                            System.out.println(hasEvents);
                         } else {
                             keyCount = selector.select(selectorTimeout);
+                            System.out.println(hasEvents);
                         }
                         wakeupCounter.set(0);
                     }
@@ -801,6 +806,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                     // Either we timed out or we woke up, process events first
                     if (keyCount == 0) {
                         hasEvents = (hasEvents | events());
+                        System.out.println(hasEvents);
                     }
                 } catch (Throwable x) {
                     ExceptionUtils.handleThrowable(x);
@@ -809,6 +815,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 }
 
                 Iterator<SelectionKey> iterator = keyCount > 0 ? selector.selectedKeys().iterator() : null;
+                System.out.println(hasEvents);
                 // Walk through the collection of ready keys and dispatch
                 // any active event.
                 while (iterator != null && iterator.hasNext()) {
