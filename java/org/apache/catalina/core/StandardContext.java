@@ -2812,9 +2812,7 @@ public class StandardContext extends ContainerBase
             Boolean failCtxIfServletStartFails) {
         Boolean oldFailCtxIfServletStartFails = this.failCtxIfServletStartFails;
         this.failCtxIfServletStartFails = failCtxIfServletStartFails;
-        support.firePropertyChange("failCtxIfServletStartFails",
-                oldFailCtxIfServletStartFails,
-                failCtxIfServletStartFails);
+        support.firePropertyChange("failCtxIfServletStartFails",oldFailCtxIfServletStartFails,failCtxIfServletStartFails);
     }
 
     protected boolean getComputedFailCtxIfServletStartFails() {
@@ -2872,8 +2870,7 @@ public class StandardContext extends ContainerBase
                     return;
                 }
             }
-            ApplicationParameter results[] = Arrays.copyOf(
-                    applicationParameters, applicationParameters.length + 1);
+            ApplicationParameter results[] = Arrays.copyOf(applicationParameters, applicationParameters.length + 1);
             results[applicationParameters.length] = parameter;
             applicationParameters = results;
         }
@@ -2898,8 +2895,7 @@ public class StandardContext extends ContainerBase
         Wrapper oldJspServlet = null;
 
         if (!(child instanceof Wrapper)) {
-            throw new IllegalArgumentException
-                (sm.getString("standardContext.notWrapper"));
+            throw new IllegalArgumentException(sm.getString("standardContext.notWrapper"));
         }
 
         boolean isJspServlet = "jsp".equals(child.getName());
@@ -2942,16 +2938,11 @@ public class StandardContext extends ContainerBase
             for (int j = 0; j < patterns.length; j++) {
                 patterns[j] = adjustURLPattern(patterns[j]);
                 if (!validateURLPattern(patterns[j])) {
-                    throw new IllegalArgumentException
-                            (sm.getString
-                                    ("standardContext.securityConstraint.pattern",
-                                            patterns[j]));
+                    throw new IllegalArgumentException(sm.getString("standardContext.securityConstraint.pattern", patterns[j]));
                 }
             }
-            if (collection.findMethods().length > 0 &&
-                    collection.findOmittedMethods().length > 0) {
-                throw new IllegalArgumentException(sm.getString(
-                        "standardContext.securityConstraint.mixHttpMethod"));
+            if (collection.findMethods().length > 0 &&collection.findOmittedMethods().length > 0) {
+                throw new IllegalArgumentException(sm.getString("standardContext.securityConstraint.mixHttpMethod"));
             }
         }
 
@@ -2975,21 +2966,17 @@ public class StandardContext extends ContainerBase
     public void addErrorPage(ErrorPage errorPage) {
         // Validate the input parameters
         if (errorPage == null) {
-            throw new IllegalArgumentException
-                (sm.getString("standardContext.errorPage.required"));
+            throw new IllegalArgumentException(sm.getString("standardContext.errorPage.required"));
         }
         String location = errorPage.getLocation();
         if ((location != null) && !location.startsWith("/")) {
             if (isServlet22()) {
                 if(log.isDebugEnabled()) {
-                    log.debug(sm.getString("standardContext.errorPage.warning",
-                                 location));
+                    log.debug(sm.getString("standardContext.errorPage.warning", location));
                 }
                 errorPage.setLocation("/" + location);
             } else {
-                throw new IllegalArgumentException
-                    (sm.getString("standardContext.errorPage.error",
-                                  location));
+                throw new IllegalArgumentException(sm.getString("standardContext.errorPage.error", location));
             }
         }
 
@@ -3063,21 +3050,17 @@ public class StandardContext extends ContainerBase
         String[] servletNames = filterMap.getServletNames();
         String[] urlPatterns = filterMap.getURLPatterns();
         if (findFilterDef(filterName) == null) {
-            throw new IllegalArgumentException
-                (sm.getString("standardContext.filterMap.name", filterName));
+            throw new IllegalArgumentException(sm.getString("standardContext.filterMap.name", filterName));
         }
 
         if (!filterMap.getMatchAllServletNames() &&
             !filterMap.getMatchAllUrlPatterns() &&
             (servletNames.length == 0) && (urlPatterns.length == 0)) {
-            throw new IllegalArgumentException
-                (sm.getString("standardContext.filterMap.either"));
+            throw new IllegalArgumentException(sm.getString("standardContext.filterMap.either"));
         }
         for (String urlPattern : urlPatterns) {
             if (!validateURLPattern(urlPattern)) {
-                throw new IllegalArgumentException
-                        (sm.getString("standardContext.filterMap.pattern",
-                                urlPattern));
+                throw new IllegalArgumentException(sm.getString("standardContext.filterMap.pattern", urlPattern));
             }
         }
     }
@@ -3224,13 +3207,11 @@ public class StandardContext extends ContainerBase
                                   boolean jspWildCard) {
         // Validate the proposed mapping
         if (findChild(name) == null) {
-            throw new IllegalArgumentException
-                (sm.getString("standardContext.servletMap.name", name));
+            throw new IllegalArgumentException(sm.getString("standardContext.servletMap.name", name));
         }
         String adjustedPattern = adjustURLPattern(pattern);
         if (!validateURLPattern(adjustedPattern)) {
-            throw new IllegalArgumentException
-                (sm.getString("standardContext.servletMap.pattern", adjustedPattern));
+            throw new IllegalArgumentException(sm.getString("standardContext.servletMap.pattern", adjustedPattern));
         }
 
         // Add this mapping to our registered set

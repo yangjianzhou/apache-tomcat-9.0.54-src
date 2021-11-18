@@ -128,12 +128,10 @@ public class ContextConfig implements LifecycleListener {
     /**
      * The string resources for this package.
      */
-    protected static final StringManager sm =
-        StringManager.getManager(Constants.Package);
+    protected static final StringManager sm =  StringManager.getManager(Constants.Package);
 
 
-    protected static final LoginConfig DUMMY_LOGIN_CONFIG =
-        new LoginConfig("NONE", null, null, null);
+    protected static final LoginConfig DUMMY_LOGIN_CONFIG =  new LoginConfig("NONE", null, null, null);
 
 
     /**
@@ -146,8 +144,7 @@ public class ContextConfig implements LifecycleListener {
     static {
         // Load our mapping properties for the standard authenticators
         Properties props = new Properties();
-        try (InputStream is = ContextConfig.class.getClassLoader().getResourceAsStream(
-                "org/apache/catalina/startup/Authenticators.properties")) {
+        try (InputStream is = ContextConfig.class.getClassLoader().getResourceAsStream("org/apache/catalina/startup/Authenticators.properties")) {
             if (is != null) {
                 props.load(is);
             }
@@ -166,8 +163,7 @@ public class ContextConfig implements LifecycleListener {
     /**
      * Cache of default web.xml fragments per Host
      */
-    protected static final Map<Host,DefaultWebXmlCacheEntry> hostWebXmlCache =
-            new ConcurrentHashMap<>();
+    protected static final Map<Host,DefaultWebXmlCacheEntry> hostWebXmlCache = new ConcurrentHashMap<>();
 
 
     /**
@@ -334,8 +330,7 @@ public class ContextConfig implements LifecycleListener {
 
         long t2=System.currentTimeMillis();
         if (context instanceof StandardContext) {
-            ((StandardContext) context).setStartupTime(t2-t1+
-                    ((StandardContext) context).getStartupTime());
+            ((StandardContext) context).setStartupTime(t2-t1+((StandardContext) context).getStartupTime());
         }
     }
 
@@ -385,8 +380,7 @@ public class ContextConfig implements LifecycleListener {
             // Identify the class name of the Valve we should configure
             String authenticatorName = authenticators.getProperty(loginConfig.getAuthMethod());
             if (authenticatorName == null) {
-                log.error(sm.getString("contextConfig.authenticatorMissing",
-                                 loginConfig.getAuthMethod()));
+                log.error(sm.getString("contextConfig.authenticatorMissing", loginConfig.getAuthMethod()));
                 ok = false;
                 return;
             }
@@ -397,10 +391,7 @@ public class ContextConfig implements LifecycleListener {
                 authenticator = (Valve) authenticatorClass.getConstructor().newInstance();
             } catch (Throwable t) {
                 ExceptionUtils.handleThrowable(t);
-                log.error(sm.getString(
-                                    "contextConfig.authenticatorInstantiate",
-                                    authenticatorName),
-                          t);
+                log.error(sm.getString("contextConfig.authenticatorInstantiate",  authenticatorName), t);
                 ok = false;
             }
         }

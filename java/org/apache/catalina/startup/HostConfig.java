@@ -1334,8 +1334,7 @@ public class HostConfig implements LifecycleListener {
                         app.redeployResources.put(resources[i],
                                 Long.valueOf(resource.lastModified()));
                     } else if (app.hasDescriptor &&
-                            resource.getName().toLowerCase(
-                                    Locale.ENGLISH).endsWith(".war")) {
+                            resource.getName().toLowerCase(Locale.ENGLISH).endsWith(".war")) {
                         // Modified WAR triggers a reload if there is an XML
                         // file present
                         // The only resource that should be deleted is the
@@ -1346,16 +1345,14 @@ public class HostConfig implements LifecycleListener {
                             // This is an expanded directory
                             File docBaseFile = new File(docBase);
                             if (!docBaseFile.isAbsolute()) {
-                                docBaseFile = new File(host.getAppBaseFile(),
-                                        docBase);
+                                docBaseFile = new File(host.getAppBaseFile(), docBase);
                             }
                             reload(app, docBaseFile, resource.getAbsolutePath());
                         } else {
                             reload(app, null, null);
                         }
                         // Update times
-                        app.redeployResources.put(resources[i],
-                                Long.valueOf(resource.lastModified()));
+                        app.redeployResources.put(resources[i], Long.valueOf(resource.lastModified()));
                         app.timestamp = System.currentTimeMillis();
                         boolean unpackWAR = unpackWARs;
                         if (unpackWAR && context instanceof StandardContext) {
@@ -1436,8 +1433,7 @@ public class HostConfig implements LifecycleListener {
         Context context = (Context) host.findChild(app.name);
         if (context.getState().isAvailable()) {
             if (fileToRemove != null && newDocBase != null) {
-                context.addLifecycleListener(
-                        new ExpandedDirectoryRemovalListener(fileToRemove, newDocBase));
+                context.addLifecycleListener(new ExpandedDirectoryRemovalListener(fileToRemove, newDocBase));
             }
             // Reload catches and logs exceptions
             context.reload();
@@ -1466,8 +1462,7 @@ public class HostConfig implements LifecycleListener {
             host.removeChild(context);
         } catch (Throwable t) {
             ExceptionUtils.handleThrowable(t);
-            log.warn(sm.getString
-                     ("hostConfig.context.remove", app.name), t);
+            log.warn(sm.getString("hostConfig.context.remove", app.name), t);
         }
         deployed.remove(app.name);
     }
@@ -1537,8 +1532,7 @@ public class HostConfig implements LifecycleListener {
         try {
             canonicalLocation = resource.getParentFile().getCanonicalPath();
         } catch (IOException e) {
-            log.warn(sm.getString(
-                    "hostConfig.canonicalizing", resource.getParentFile(), app.name), e);
+            log.warn(sm.getString("hostConfig.canonicalizing", resource.getParentFile(), app.name), e);
             return false;
         }
 
@@ -1560,13 +1554,11 @@ public class HostConfig implements LifecycleListener {
         try {
             canonicalConfigBase = host.getConfigBaseFile().getCanonicalPath();
         } catch (IOException e) {
-            log.warn(sm.getString(
-                    "hostConfig.canonicalizing", host.getConfigBaseFile(), app.name), e);
+            log.warn(sm.getString("hostConfig.canonicalizing", host.getConfigBaseFile(), app.name), e);
             return false;
         }
 
-        if (canonicalLocation.equals(canonicalConfigBase) &&
-                resource.getName().endsWith(".xml")) {
+        if (canonicalLocation.equals(canonicalConfigBase) &&  resource.getName().endsWith(".xml")) {
             // Resource is an xml file in the configBase so it may be deleted
             return true;
         }
@@ -1578,7 +1570,7 @@ public class HostConfig implements LifecycleListener {
 
     public void beforeStart() {
         if (host.getCreateDirs()) {
-            File[] dirs = new File[] {host.getAppBaseFile(),host.getConfigBaseFile()};
+            File[] dirs = new File[]{host.getAppBaseFile(), host.getConfigBaseFile()};
             for (File dir : dirs) {
                 if (!dir.mkdirs() && !dir.isDirectory()) {
                     log.error(sm.getString("hostConfig.createDirs", dir));
@@ -1599,17 +1591,14 @@ public class HostConfig implements LifecycleListener {
 
         try {
             ObjectName hostON = host.getObjectName();
-            oname = new ObjectName
-                (hostON.getDomain() + ":type=Deployer,host=" + host.getName());
-            Registry.getRegistry(null, null).registerComponent
-                (this, oname, this.getClass().getName());
+            oname = new ObjectName(hostON.getDomain() + ":type=Deployer,host=" + host.getName());
+            Registry.getRegistry(null, null).registerComponent(this, oname, this.getClass().getName());
         } catch (Exception e) {
             log.warn(sm.getString("hostConfig.jmx.register", oname), e);
         }
 
         if (!host.getAppBaseFile().isDirectory()) {
-            log.error(sm.getString("hostConfig.appBase", host.getName(),
-                    host.getAppBaseFile().getPath()));
+            log.error(sm.getString("hostConfig.appBase", host.getName(),host.getAppBaseFile().getPath()));
             host.setDeployOnStartup(false);
             host.setAutoDeploy(false);
         }
