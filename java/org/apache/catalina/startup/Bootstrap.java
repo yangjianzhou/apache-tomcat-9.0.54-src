@@ -370,8 +370,7 @@ public final class Bootstrap {
      */
     public void stopServer() throws Exception {
 
-        Method method =
-            catalinaDaemon.getClass().getMethod("stopServer", (Class[]) null);
+        Method method = catalinaDaemon.getClass().getMethod("stopServer", (Class[]) null);
         method.invoke(catalinaDaemon, (Object[]) null);
     }
 
@@ -420,8 +419,7 @@ public final class Bootstrap {
     public boolean getAwait() throws Exception {
         Class<?> paramTypes[] = new Class[0];
         Object paramValues[] = new Object[0];
-        Method method =
-            catalinaDaemon.getClass().getMethod("getAwait", paramTypes);
+        Method method = catalinaDaemon.getClass().getMethod("getAwait", paramTypes);
         Boolean b = (Boolean) method.invoke(catalinaDaemon, paramValues);
         return b.booleanValue();
     }

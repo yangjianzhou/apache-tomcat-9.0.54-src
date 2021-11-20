@@ -600,8 +600,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
                     } catch (SocketTimeoutException ste) {
                         // This should never happen but bug 56684 suggests that
                         // it does.
-                        log.warn(sm.getString("standardServer.accept.timeout",
-                                Long.valueOf(System.currentTimeMillis() - acceptStartTime)), ste);
+                        log.warn(sm.getString("standardServer.accept.timeout", Long.valueOf(System.currentTimeMillis() - acceptStartTime)), ste);
                         continue;
                     } catch (AccessControlException ace) {
                         log.warn(sm.getString("standardServer.accept.security"), ace);
@@ -873,9 +872,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
             ObjectName sname = new ObjectName("Catalina:type=StoreConfig");
             MBeanServer server = Registry.getRegistry(null, null).getMBeanServer();
             if (server.isRegistered(sname)) {
-                server.invoke(sname, "store",
-                    new Object[] {context},
-                    new String [] { "java.lang.String"});
+                server.invoke(sname, "store",new Object[] {context}, new String [] { "java.lang.String"});
             } else {
                 log.error(sm.getString("standardServer.storeConfig.notAvailable", sname));
             }
@@ -1084,8 +1081,7 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
     public void setParentClassLoader(ClassLoader parent) {
         ClassLoader oldParentClassLoader = this.parentClassLoader;
         this.parentClassLoader = parent;
-        support.firePropertyChange("parentClassLoader", oldParentClassLoader,
-                                   this.parentClassLoader);
+        support.firePropertyChange("parentClassLoader", oldParentClassLoader, this.parentClassLoader);
     }
 
 
