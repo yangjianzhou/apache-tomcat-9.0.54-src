@@ -270,8 +270,7 @@ public class ContextConfig implements LifecycleListener {
      * @param customAuthenticators Custom mappings of login methods to
      * authenticators
      */
-    public void setCustomAuthenticators(
-            Map<String,Authenticator> customAuthenticators) {
+    public void setCustomAuthenticators( Map<String,Authenticator> customAuthenticators) {
         this.customAuthenticators = customAuthenticators;
     }
 
@@ -622,8 +621,7 @@ public class ContextConfig implements LifecycleListener {
                 contextXml = null;
             } else if (!useGeneratedCode) {
                 String hostContextFile = Container.getConfigPath(context, Constants.HostContextXml);
-                try (ConfigurationSource.Resource contextXmlResource =
-                        ConfigFileLoader.getSource().getResource(hostContextFile)) {
+                try (ConfigurationSource.Resource contextXmlResource = ConfigFileLoader.getSource().getResource(hostContextFile)) {
                     if (generateCode) {
                         contextXmlJavaSource = getContextXmlJavaSource(contextXmlPackageName, contextXmlSimpleClassName);
                         digester.startGeneratingCode();
