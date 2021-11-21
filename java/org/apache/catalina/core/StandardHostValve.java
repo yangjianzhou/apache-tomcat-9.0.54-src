@@ -358,8 +358,7 @@ final class StandardHostValve extends ValveBase {
      * @param response The response being generated
      * @param errorPage The errorPage directive we are obeying
      */
-    private boolean custom(Request request, Response response,
-                             ErrorPage errorPage) {
+    private boolean custom(Request request, Response response, ErrorPage errorPage) {
 
         if (container.getLogger().isDebugEnabled()) {
             container.getLogger().debug("Processing " + errorPage);
@@ -367,14 +366,11 @@ final class StandardHostValve extends ValveBase {
 
         try {
             // Forward control to the specified location
-            ServletContext servletContext =
-                request.getContext().getServletContext();
-            RequestDispatcher rd =
-                servletContext.getRequestDispatcher(errorPage.getLocation());
+            ServletContext servletContext =  request.getContext().getServletContext();
+            RequestDispatcher rd =  servletContext.getRequestDispatcher(errorPage.getLocation());
 
             if (rd == null) {
-                container.getLogger().error(
-                    sm.getString("standardHostValue.customStatusFailed", errorPage.getLocation()));
+                container.getLogger().error(sm.getString("standardHostValue.customStatusFailed", errorPage.getLocation()));
                 return false;
             }
 
@@ -393,8 +389,7 @@ final class StandardHostValve extends ValveBase {
 
                 // Now close immediately as an additional signal to the client
                 // that something went wrong
-                response.getCoyoteResponse().action(ActionCode.CLOSE_NOW,
-                        request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
+                response.getCoyoteResponse().action(ActionCode.CLOSE_NOW,request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
             } else {
                 // Reset the response (keeping the real error code and message)
                 response.resetBuffer(true);
