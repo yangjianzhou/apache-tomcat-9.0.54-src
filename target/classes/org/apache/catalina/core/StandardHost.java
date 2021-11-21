@@ -346,8 +346,7 @@ public class StandardHost extends ContainerBase implements Host {
 
         boolean oldAutoDeploy = this.autoDeploy;
         this.autoDeploy = autoDeploy;
-        support.firePropertyChange("autoDeploy", oldAutoDeploy,
-                                   this.autoDeploy);
+        support.firePropertyChange("autoDeploy", oldAutoDeploy, this.autoDeploy);
 
     }
 
@@ -373,8 +372,7 @@ public class StandardHost extends ContainerBase implements Host {
 
         String oldConfigClass = this.configClass;
         this.configClass = configClass;
-        support.firePropertyChange("configClass",
-                                   oldConfigClass, this.configClass);
+        support.firePropertyChange("configClass",oldConfigClass, this.configClass);
 
     }
 
@@ -398,8 +396,7 @@ public class StandardHost extends ContainerBase implements Host {
 
         String oldContextClass = this.contextClass;
         this.contextClass = contextClass;
-        support.firePropertyChange("contextClass",
-                                   oldContextClass, this.contextClass);
+        support.firePropertyChange("contextClass", oldContextClass, this.contextClass);
 
     }
 
@@ -425,8 +422,7 @@ public class StandardHost extends ContainerBase implements Host {
 
         boolean oldDeployOnStartup = this.deployOnStartup;
         this.deployOnStartup = deployOnStartup;
-        support.firePropertyChange("deployOnStartup", oldDeployOnStartup,
-                                   this.deployOnStartup);
+        support.firePropertyChange("deployOnStartup", oldDeployOnStartup,this.deployOnStartup);
 
     }
 
@@ -486,9 +482,7 @@ public class StandardHost extends ContainerBase implements Host {
 
         String oldErrorReportValveClassClass = this.errorReportValveClass;
         this.errorReportValveClass = errorReportValveClass;
-        support.firePropertyChange("errorReportValveClass",
-                                   oldErrorReportValveClassClass,
-                                   this.errorReportValveClass);
+        support.firePropertyChange("errorReportValveClass", oldErrorReportValveClassClass,this.errorReportValveClass);
 
     }
 
@@ -515,8 +509,7 @@ public class StandardHost extends ContainerBase implements Host {
     public void setName(String name) {
 
         if (name == null) {
-            throw new IllegalArgumentException
-                (sm.getString("standardHost.nullName"));
+            throw new IllegalArgumentException(sm.getString("standardHost.nullName"));
         }
 
         name = name.toLowerCase(Locale.ENGLISH);      // Internally all names are lower case
@@ -609,9 +602,7 @@ public class StandardHost extends ContainerBase implements Host {
         } else {
             this.deployIgnore = Pattern.compile(deployIgnore);
         }
-        support.firePropertyChange("deployIgnore",
-                                   oldDeployIgnore,
-                                   deployIgnore);
+        support.firePropertyChange("deployIgnore",oldDeployIgnore, deployIgnore);
     }
 
 
@@ -628,13 +619,10 @@ public class StandardHost extends ContainerBase implements Host {
      * @param failCtxIfServletStartFails <code>false</code> to ignore errors on Servlets which
      *    are stated when the web application starts
      */
-    public void setFailCtxIfServletStartFails(
-            boolean failCtxIfServletStartFails) {
+    public void setFailCtxIfServletStartFails( boolean failCtxIfServletStartFails) {
         boolean oldFailCtxIfServletStartFails = this.failCtxIfServletStartFails;
         this.failCtxIfServletStartFails = failCtxIfServletStartFails;
-        support.firePropertyChange("failCtxIfServletStartFails",
-                oldFailCtxIfServletStartFails,
-                failCtxIfServletStartFails);
+        support.firePropertyChange("failCtxIfServletStartFails",oldFailCtxIfServletStartFails, failCtxIfServletStartFails);
     }
 
 
@@ -820,9 +808,7 @@ public class StandardHost extends ContainerBase implements Host {
                     }
                 }
                 if(!found) {
-                    Valve valve = ErrorReportValve.class.getName().equals(errorValve) ?
-                        new ErrorReportValve() :
-                        (Valve) Class.forName(errorValve).getConstructor().newInstance();
+                    Valve valve = ErrorReportValve.class.getName().equals(errorValve) ?new ErrorReportValve() : (Valve) Class.forName(errorValve).getConstructor().newInstance();
                     getPipeline().addValve(valve);
                 }
             } catch (Throwable t) {

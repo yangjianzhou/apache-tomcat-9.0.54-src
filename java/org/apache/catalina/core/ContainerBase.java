@@ -691,8 +691,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase implements Contai
     @Override
     public void addChild(Container child) {
         if (Globals.IS_SECURITY_ENABLED) {
-            PrivilegedAction<Void> dp =
-                new PrivilegedAddChild(child);
+            PrivilegedAction<Void> dp = new PrivilegedAddChild(child);
             AccessController.doPrivileged(dp);
         } else {
             addChildInternal(child);
@@ -707,8 +706,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase implements Contai
 
         synchronized(children) {
             if (children.get(child.getName()) != null) {
-                throw new IllegalArgumentException(
-                        sm.getString("containerBase.child.notUnique", child.getName()));
+                throw new IllegalArgumentException( sm.getString("containerBase.child.notUnique", child.getName()));
             }
             child.setParent(this);  // May throw IAE
             children.put(child.getName(), child);

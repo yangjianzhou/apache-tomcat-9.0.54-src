@@ -211,8 +211,7 @@ public class StandardEngine extends ContainerBase implements Engine {
     public void addChild(Container child) {
 
         if (!(child instanceof Host)) {
-            throw new IllegalArgumentException
-                (sm.getString("standardEngine.notHost"));
+            throw new IllegalArgumentException(sm.getString("standardEngine.notHost"));
         }
         super.addChild(child);
 

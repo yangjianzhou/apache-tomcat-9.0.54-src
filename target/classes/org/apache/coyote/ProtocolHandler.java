@@ -231,7 +231,7 @@ public interface ProtocolHandler {
      * @throws SecurityException Exception occurred
      */
     public static ProtocolHandler create(String protocol, boolean apr)
-            throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+        throws ClassNotFoundException, InstantiationException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
         if (protocol == null || "HTTP/1.1".equals(protocol)
                 || (!apr && org.apache.coyote.http11.Http11NioProtocol.class.getName().equals(protocol))

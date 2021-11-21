@@ -245,8 +245,7 @@ final class StandardWrapperValve extends ValveBase {
             exception(request, response, e);
         } catch (Throwable e) {
             ExceptionUtils.handleThrowable(e);
-            container.getLogger().error(sm.getString(
-                    "standardWrapper.serviceException", wrapper.getName(),
+            container.getLogger().error(sm.getString("standardWrapper.serviceException", wrapper.getName(),
                     context.getName()), e);
             throwable = e;
             exception(request, response, e);
@@ -313,8 +312,7 @@ final class StandardWrapperValve extends ValveBase {
      * @param exception The exception that occurred (which possibly wraps
      *  a root cause exception
      */
-    private void exception(Request request, Response response,
-                           Throwable exception) {
+    private void exception(Request request, Response response, Throwable exception) {
         request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, exception);
         response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         response.setError();

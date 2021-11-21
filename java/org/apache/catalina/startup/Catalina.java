@@ -525,6 +525,9 @@ public class Catalina {
 
     protected void parseServerXml(boolean start) {
         // Set configuration source
+        /**
+         * configFile : config/server.xml
+         */
         ConfigFileLoader.setSource(new CatalinaBaseConfigurationSource(Bootstrap.getCatalinaBaseFile(), getConfigFile()));
         File file = configFile();
 

@@ -45,8 +45,7 @@ import org.apache.tomcat.util.res.StringManager;
  * @author Remy Maucherat
  * @author Costin Manolache
  */
-public class MapperListener extends LifecycleMBeanBase
-        implements ContainerListener, LifecycleListener {
+public class MapperListener extends LifecycleMBeanBase implements ContainerListener, LifecycleListener {
 
 
     private static final Log log = LogFactory.getLog(MapperListener.class);
@@ -458,16 +457,13 @@ public class MapperListener extends LifecycleMBeanBase
      * Populate <code>wrappers</code> list with information for registration of
      * mappings for this wrapper in this context.
      */
-    private void prepareWrapperMappingInfo(Context context, Wrapper wrapper,
-            List<WrapperMappingInfo> wrappers) {
+    private void prepareWrapperMappingInfo(Context context, Wrapper wrapper, List<WrapperMappingInfo> wrappers) {
         String wrapperName = wrapper.getName();
         boolean resourceOnly = context.isResourceOnlyServlet(wrapperName);
         String[] mappings = wrapper.findMappings();
         for (String mapping : mappings) {
-            boolean jspWildCard = (wrapperName.equals("jsp")
-                                   && mapping.endsWith("/*"));
-            wrappers.add(new WrapperMappingInfo(mapping, wrapper, jspWildCard,
-                    resourceOnly));
+            boolean jspWildCard = (wrapperName.equals("jsp") && mapping.endsWith("/*"));
+            wrappers.add(new WrapperMappingInfo(mapping, wrapper, jspWildCard, resourceOnly));
         }
     }
 

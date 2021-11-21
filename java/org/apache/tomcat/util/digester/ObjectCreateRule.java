@@ -89,8 +89,7 @@ public class ObjectCreateRule extends Rule {
      * @param attributes The attribute list for this element
      */
     @Override
-    public void begin(String namespace, String name, Attributes attributes)
-            throws Exception {
+    public void begin(String namespace, String name, Attributes attributes) throws Exception {
 
         String realClassName = getRealClassName(attributes);
 
@@ -145,8 +144,7 @@ public class ObjectCreateRule extends Rule {
 
         Object top = digester.pop();
         if (digester.log.isDebugEnabled()) {
-            digester.log.debug("[ObjectCreateRule]{" + digester.match +
-                    "} Pop " + top.getClass().getName());
+            digester.log.debug("[ObjectCreateRule]{" + digester.match +"} Pop " + top.getClass().getName());
         }
 
     }

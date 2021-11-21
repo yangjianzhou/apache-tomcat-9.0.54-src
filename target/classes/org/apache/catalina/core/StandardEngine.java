@@ -102,8 +102,7 @@ public class StandardEngine extends ContainerBase implements Engine {
      * Default access log to use for request/response pairs where we can't ID
      * the intended host and context.
      */
-    private final AtomicReference<AccessLog> defaultAccessLog =
-        new AtomicReference<>();
+    private final AtomicReference<AccessLog> defaultAccessLog = new AtomicReference<>();
 
     // ------------------------------------------------------------- Properties
 
@@ -212,8 +211,7 @@ public class StandardEngine extends ContainerBase implements Engine {
     public void addChild(Container child) {
 
         if (!(child instanceof Host)) {
-            throw new IllegalArgumentException
-                (sm.getString("standardEngine.notHost"));
+            throw new IllegalArgumentException(sm.getString("standardEngine.notHost"));
         }
         super.addChild(child);
 
@@ -415,17 +413,14 @@ public class StandardEngine extends ContainerBase implements Engine {
         }
     }
 
-    protected static final class AccessLogListener
-            implements PropertyChangeListener, LifecycleListener,
-            ContainerListener {
+    protected static final class AccessLogListener implements PropertyChangeListener, LifecycleListener, ContainerListener {
 
         private final StandardEngine engine;
         private final Host host;
         private final Context context;
         private volatile boolean disabled = false;
 
-        public AccessLogListener(StandardEngine engine, Host host,
-                Context context) {
+        public AccessLogListener(StandardEngine engine, Host host, Context context) {
             this.engine = engine;
             this.host = host;
             this.context = context;

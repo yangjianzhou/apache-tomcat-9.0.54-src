@@ -1719,8 +1719,7 @@ public class HostConfig implements LifecycleListener {
             return;
         }
 
-        DeployedApplication deployedApp =
-                new DeployedApplication(contextName, false);
+        DeployedApplication deployedApp = new DeployedApplication(contextName, false);
 
         // Add the associated docBase to the redeployed list if it's a WAR
         boolean isWar = false;

@@ -42,8 +42,7 @@ public class ListenerCreateRule extends ObjectCreateRule {
     }
 
     @Override
-    public void begin(String namespace, String name, Attributes attributes)
-            throws Exception {
+    public void begin(String namespace, String name, Attributes attributes)  throws Exception {
         if ("true".equals(attributes.getValue("optional"))) {
             try {
                 super.begin(namespace, name, attributes);

@@ -71,13 +71,11 @@ import org.apache.tomcat.util.modeler.Util;
  * @author Remy Maucherat
  */
 @SuppressWarnings("deprecation") // SingleThreadModel
-public class StandardWrapper extends ContainerBase
-    implements ServletConfig, Wrapper, NotificationEmitter {
+public class StandardWrapper extends ContainerBase implements ServletConfig, Wrapper, NotificationEmitter {
 
     private final Log log = LogFactory.getLog(StandardWrapper.class); // must not be static
 
-    protected static final String[] DEFAULT_SERVLET_METHODS = new String[] {
-                                                    "GET", "HEAD", "POST" };
+    protected static final String[] DEFAULT_SERVLET_METHODS = new String[] { "GET", "HEAD", "POST" };
 
     // ----------------------------------------------------------- Constructors
 
@@ -501,8 +499,7 @@ public class StandardWrapper extends ContainerBase
 
         String oldServletClass = this.servletClass;
         this.servletClass = servletClass;
-        support.firePropertyChange("servletClass", oldServletClass,
-                                   this.servletClass);
+        support.firePropertyChange("servletClass", oldServletClass, this.servletClass);
         if (Constants.JSP_SERVLET_CLASS.equals(servletClass)) {
             isJspServlet = true;
         }

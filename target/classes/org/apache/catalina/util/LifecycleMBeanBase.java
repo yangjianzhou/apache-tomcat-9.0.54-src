@@ -225,8 +225,7 @@ public abstract class LifecycleMBeanBase extends LifecycleBase implements JmxEna
      * {@link MBeanServer} and/or {@link ObjectName}.
      */
     @Override
-    public final ObjectName preRegister(MBeanServer server, ObjectName name)
-            throws Exception {
+    public final ObjectName preRegister(MBeanServer server, ObjectName name) throws Exception {
 
         this.mserver = server;
         this.oname = name;

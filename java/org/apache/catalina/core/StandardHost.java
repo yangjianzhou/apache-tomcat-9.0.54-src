@@ -667,8 +667,7 @@ public class StandardHost extends ContainerBase implements Host {
     public void addChild(Container child) {
 
         if (!(child instanceof Context)) {
-            throw new IllegalArgumentException
-                (sm.getString("standardHost.notContext"));
+            throw new IllegalArgumentException(sm.getString("standardHost.notContext"));
         }
 
         child.addLifecycleListener(new MemoryLeakTrackingListener());
