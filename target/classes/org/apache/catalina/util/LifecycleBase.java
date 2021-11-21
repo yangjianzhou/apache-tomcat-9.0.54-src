@@ -219,8 +219,7 @@ public abstract class LifecycleBase implements Lifecycle {
     @Override
     public final synchronized void stop() throws LifecycleException {
 
-        if (LifecycleState.STOPPING_PREP.equals(state) || LifecycleState.STOPPING.equals(state) ||
-                LifecycleState.STOPPED.equals(state)) {
+        if (LifecycleState.STOPPING_PREP.equals(state) || LifecycleState.STOPPING.equals(state) || LifecycleState.STOPPED.equals(state)) {
 
             if (log.isDebugEnabled()) {
                 Exception e = new LifecycleException();
@@ -228,7 +227,6 @@ public abstract class LifecycleBase implements Lifecycle {
             } else if (log.isInfoEnabled()) {
                 log.info(sm.getString("lifecycleBase.alreadyStopped", toString()));
             }
-
             return;
         }
 
@@ -374,14 +372,12 @@ public abstract class LifecycleBase implements Lifecycle {
      * @param data  The data to pass to the associated {@link Lifecycle} event
      * @throws LifecycleException when attempting to set an invalid state
      */
-    protected synchronized void setState(LifecycleState state, Object data)
-            throws LifecycleException {
+    protected synchronized void setState(LifecycleState state, Object data) throws LifecycleException {
         setStateInternal(state, data, true);
     }
 
 
-    private synchronized void setStateInternal(LifecycleState state, Object data, boolean check)
-            throws LifecycleException {
+    private synchronized void setStateInternal(LifecycleState state, Object data, boolean check) throws LifecycleException {
 
         if (log.isDebugEnabled()) {
             log.debug(sm.getString("lifecycleBase.setState", this, state));

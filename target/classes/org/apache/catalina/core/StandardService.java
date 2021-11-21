@@ -234,8 +234,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
                 connector.start();
             }
         } catch (LifecycleException e) {
-            throw new IllegalArgumentException(
-                    sm.getString("standardService.connector.startFailed", connector), e);
+            throw new IllegalArgumentException(sm.getString("standardService.connector.startFailed", connector), e);
         }
 
         // Report this property change to interested listeners
@@ -296,9 +295,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
                 try {
                     connectors[j].stop();
                 } catch (LifecycleException e) {
-                    log.error(sm.getString(
-                            "standardService.connector.stopFailed",
-                            connectors[j]), e);
+                    log.error(sm.getString("standardService.connector.stopFailed", connectors[j]), e);
                 }
             }
             connector.setService(null);
@@ -501,8 +498,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
         // Now stop the connectors
         synchronized (connectorsLock) {
             for (Connector connector: connectors) {
-                if (!LifecycleState.STARTED.equals(
-                        connector.getState())) {
+                if (!LifecycleState.STARTED.equals(connector.getState())) {
                     // Connectors only need stopping if they are currently
                     // started. They may have failed to start or may have been
                     // stopped (e.g. via a JMX call)
@@ -607,8 +603,7 @@ public class StandardService extends LifecycleMBeanBase implements Service {
     public void setParentClassLoader(ClassLoader parent) {
         ClassLoader oldParentClassLoader = this.parentClassLoader;
         this.parentClassLoader = parent;
-        support.firePropertyChange("parentClassLoader", oldParentClassLoader,
-                                   this.parentClassLoader);
+        support.firePropertyChange("parentClassLoader", oldParentClassLoader, this.parentClassLoader);
     }
 
 

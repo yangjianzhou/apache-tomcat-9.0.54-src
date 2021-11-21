@@ -1051,8 +1051,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase implements Contai
      * access log.
      */
     @Override
-    public void logAccess(Request request, Response response, long time,
-            boolean useDefault) {
+    public void logAccess(Request request, Response response, long time, boolean useDefault) {
 
         boolean logged = false;
 
@@ -1288,10 +1287,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase implements Contai
                     log.error(sm.getString("containerBase.backgroundProcess.error"), e);
                 }
             }
-            backgroundProcessorFuture = Container.getService(this).getServer().getUtilityExecutor()
-                    .scheduleWithFixedDelay(new ContainerBackgroundProcessor(),
-                            backgroundProcessorDelay, backgroundProcessorDelay,
-                            TimeUnit.SECONDS);
+            backgroundProcessorFuture = Container.getService(this).getServer().getUtilityExecutor().scheduleWithFixedDelay(new ContainerBackgroundProcessor(),backgroundProcessorDelay, backgroundProcessorDelay, TimeUnit.SECONDS);
         }
     }
 
