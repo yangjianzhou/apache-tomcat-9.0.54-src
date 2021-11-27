@@ -718,9 +718,7 @@ public abstract class ContainerBase extends LifecycleMBeanBase implements Contai
         // Don't do this inside sync block - start can be a slow process and
         // locking the children object can cause problems elsewhere
         try {
-            if ((getState().isAvailable() ||
-                    LifecycleState.STARTING_PREP.equals(getState())) &&
-                    startChildren) {
+            if ((getState().isAvailable() || LifecycleState.STARTING_PREP.equals(getState())) && startChildren) {
                 child.start();
             }
         } catch (LifecycleException e) {

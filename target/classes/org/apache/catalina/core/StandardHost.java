@@ -110,16 +110,14 @@ public class StandardHost extends ContainerBase implements Host {
      * The Java class name of the default context configuration class
      * for deployed web applications.
      */
-    private String configClass =
-        "org.apache.catalina.startup.ContextConfig";
+    private String configClass = "org.apache.catalina.startup.ContextConfig";
 
 
     /**
      * The Java class name of the default Context implementation class for
      * deployed web applications.
      */
-    private String contextClass =
-        "org.apache.catalina.core.StandardContext";
+    private String contextClass = "org.apache.catalina.core.StandardContext";
 
 
     /**
@@ -679,7 +677,10 @@ public class StandardHost extends ContainerBase implements Host {
             ContextName cn = new ContextName(context.getDocBase(), true);
             context.setPath(cn.getPath());
         }
-
+        /**
+         * 将context添加到host的child中
+         * HashMap<String, Container> children = new HashMap<>();
+         */
         super.addChild(child);
 
     }
@@ -695,8 +696,7 @@ public class StandardHost extends ContainerBase implements Host {
             if (event.getType().equals(Lifecycle.AFTER_START_EVENT)) {
                 if (event.getSource() instanceof Context) {
                     Context context = ((Context) event.getSource());
-                    childClassLoaders.put(context.getLoader().getClassLoader(),
-                            context.getServletContext().getContextPath());
+                    childClassLoaders.put(context.getLoader().getClassLoader(),context.getServletContext().getContextPath());
                 }
             }
         }

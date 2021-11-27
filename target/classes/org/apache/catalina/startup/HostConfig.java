@@ -660,7 +660,7 @@ public class HostConfig implements LifecycleListener {
                 // If external docBase, register .xml as redeploy first
                 if (!docBase.getCanonicalFile().toPath().startsWith(host.getAppBaseFile().toPath())) {
                     isExternal = true;
-                    deployedApp.redeployResources.put( contextXml.getAbsolutePath(), Long.valueOf(contextXml.lastModified()));
+                    deployedApp.redeployResources.put(contextXml.getAbsolutePath(), Long.valueOf(contextXml.lastModified()));
                     deployedApp.redeployResources.put(docBase.getAbsolutePath(), Long.valueOf(docBase.lastModified()));
                     if (docBase.getAbsolutePath().toLowerCase(Locale.ENGLISH).endsWith(".war")) {
                         isExternalWar = true;
@@ -1242,8 +1242,7 @@ public class HostConfig implements LifecycleListener {
                     resource = new File(docBaseFile, watchedResource);
                 } else {
                     if (log.isDebugEnabled()) {
-                        log.debug("Ignoring non-existent WatchedResource '" +
-                                resource.getAbsolutePath() + "'");
+                        log.debug("Ignoring non-existent WatchedResource '" +resource.getAbsolutePath() + "'");
                     }
                     continue;
                 }
@@ -1251,7 +1250,7 @@ public class HostConfig implements LifecycleListener {
             if (log.isDebugEnabled()) {
                 log.debug("Watching WatchedResource '" +resource.getAbsolutePath() + "'");
             }
-            app.reloadResources.put(resource.getAbsolutePath(),Long.valueOf(resource.lastModified()));
+            app.reloadResources.put(resource.getAbsolutePath(), Long.valueOf(resource.lastModified()));
         }
     }
 
@@ -1772,6 +1771,7 @@ public class HostConfig implements LifecycleListener {
      * the monitored resources.
      */
     protected static class DeployedApplication {
+
         public DeployedApplication(String name, boolean hasDescriptor) {
             this.name = name;
             this.hasDescriptor = hasDescriptor;
