@@ -1242,8 +1242,7 @@ public class HostConfig implements LifecycleListener {
                     resource = new File(docBaseFile, watchedResource);
                 } else {
                     if (log.isDebugEnabled()) {
-                        log.debug("Ignoring non-existent WatchedResource '" +
-                                resource.getAbsolutePath() + "'");
+                        log.debug("Ignoring non-existent WatchedResource '" +resource.getAbsolutePath() + "'");
                     }
                     continue;
                 }

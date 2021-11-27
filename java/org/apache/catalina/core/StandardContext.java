@@ -3258,8 +3258,7 @@ public class StandardContext extends ContainerBase implements Context, Notificat
             for (String wrapperLifecycle : wrapperLifecycles) {
                 try {
                     Class<?> clazz = Class.forName(wrapperLifecycle);
-                    LifecycleListener listener =
-                            (LifecycleListener) clazz.getConstructor().newInstance();
+                    LifecycleListener listener =(LifecycleListener) clazz.getConstructor().newInstance();
                     wrapper.addLifecycleListener(listener);
                 } catch (Throwable t) {
                     ExceptionUtils.handleThrowable(t);

@@ -695,8 +695,7 @@ public class StandardHost extends ContainerBase implements Host {
             if (event.getType().equals(Lifecycle.AFTER_START_EVENT)) {
                 if (event.getSource() instanceof Context) {
                     Context context = ((Context) event.getSource());
-                    childClassLoaders.put(context.getLoader().getClassLoader(),
-                            context.getServletContext().getContextPath());
+                    childClassLoaders.put(context.getLoader().getClassLoader(),context.getServletContext().getContextPath());
                 }
             }
         }
