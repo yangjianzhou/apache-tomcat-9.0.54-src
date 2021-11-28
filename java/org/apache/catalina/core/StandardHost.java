@@ -170,8 +170,7 @@ public class StandardHost extends ContainerBase implements Host {
      * Track the class loaders for the child web applications so memory leaks
      * can be detected.
      */
-    private final Map<ClassLoader, String> childClassLoaders =
-            new WeakHashMap<>();
+    private final Map<ClassLoader, String> childClassLoaders = new WeakHashMap<>();
 
 
     /**

@@ -299,6 +299,9 @@ public class MapperListener extends LifecycleMBeanBase implements ContainerListe
     private void registerHost(Host host) {
 
         String[] aliases = host.findAliases();
+        /**
+         * 将host添加到Mapper中的mappedHosts里面
+         */
         mapper.addHost(host.getName(), aliases, host);
 
         for (Container container : host.findChildren()) {
@@ -383,18 +386,14 @@ public class MapperListener extends LifecycleMBeanBase implements ContainerListe
             prepareWrapperMappingInfo(context, (Wrapper) container, wrappers);
 
             if(log.isDebugEnabled()) {
-                log.debug(sm.getString("mapperListener.registerWrapper",
-                        container.getName(), contextPath, service));
+                log.debug(sm.getString("mapperListener.registerWrapper", container.getName(), contextPath, service));
             }
         }
 
-        mapper.addContextVersion(host.getName(), host, contextPath,
-                context.getWebappVersion(), context, welcomeFiles, resources,
-                wrappers);
+        mapper.addContextVersion(host.getName(), host, contextPath, context.getWebappVersion(), context, welcomeFiles, resources, wrappers);
 
         if(log.isDebugEnabled()) {
-            log.debug(sm.getString("mapperListener.registerContext",
-                    contextPath, service));
+            log.debug(sm.getString("mapperListener.registerContext", contextPath, service));
         }
     }
 

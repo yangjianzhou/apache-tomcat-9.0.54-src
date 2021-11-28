@@ -435,7 +435,9 @@ public class StandardService extends LifecycleMBeanBase implements Service {
                 executor.start();
             }
         }
-
+        /**
+         * 注册host、context、wrapper
+         */
         mapperListener.start();
 
         // Start our defined Connectors second
