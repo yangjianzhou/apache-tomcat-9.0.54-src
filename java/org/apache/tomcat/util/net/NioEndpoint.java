@@ -307,6 +307,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
             /**
              * acceptor接收请求，然后将请求转发给poller
              * poller就会将请求放入到线程池
+             * 在tomcat7中，可以配置多个poller线程和acceptor线程
              */
             poller = new Poller();
             Thread pollerThread = new Thread(poller, getName() + "-Poller");
