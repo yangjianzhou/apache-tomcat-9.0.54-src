@@ -46,8 +46,7 @@ import org.apache.tomcat.util.res.StringManager;
  *
  * @author Remy Maucherat
  */
-public class StatusManagerServlet
-    extends HttpServlet implements NotificationListener {
+public class StatusManagerServlet extends HttpServlet implements NotificationListener {
 
     private static final long serialVersionUID = 1L;
 
@@ -188,8 +187,7 @@ public class StatusManagerServlet
                       HttpServletResponse response)
         throws IOException, ServletException {
 
-        StringManager smClient = StringManager.getManager(
-                Constants.Package, request.getLocales());
+        StringManager smClient = StringManager.getManager(Constants.Package, request.getLocales());
 
         // mode is flag for HTML or XML output
         int mode = 0;

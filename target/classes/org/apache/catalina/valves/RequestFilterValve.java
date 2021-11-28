@@ -380,8 +380,7 @@ public abstract class RequestFilterValve extends ValveBase {
         }
 
         if (getLog().isDebugEnabled()) {
-            getLog().debug(sm.getString("requestFilterValve.deny",
-                    request.getRequestURI(), property));
+            getLog().debug(sm.getString("requestFilterValve.deny", request.getRequestURI(), property));
         }
 
         // Deny this request

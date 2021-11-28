@@ -38,8 +38,7 @@ public abstract class AbstractProcessorLight implements Processor {
 
 
     @Override
-    public SocketState process(SocketWrapperBase<?> socketWrapper, SocketEvent status)
-            throws IOException {
+    public SocketState process(SocketWrapperBase<?> socketWrapper, SocketEvent status) throws IOException {
 
         SocketState state = SocketState.CLOSED;
         Iterator<DispatchType> dispatches = null;
@@ -72,16 +71,13 @@ public abstract class AbstractProcessorLight implements Processor {
             }
 
             if (getLog().isDebugEnabled()) {
-                getLog().debug("Socket: [" + socketWrapper +
-                        "], Status in: [" + status +
-                        "], State out: [" + state + "]");
+                getLog().debug("Socket: [" + socketWrapper + "], Status in: [" + status + "], State out: [" + state + "]");
             }
 
             if (isAsync()) {
                 state = asyncPostProcess();
                 if (getLog().isDebugEnabled()) {
-                    getLog().debug("Socket: [" + socketWrapper +
-                            "], State after async post processing: [" + state + "]");
+                    getLog().debug("Socket: [" + socketWrapper +  "], State after async post processing: [" + state + "]");
                 }
             }
 

@@ -84,8 +84,7 @@ final class StandardContextValve extends ValveBase {
         try {
             response.sendAcknowledgement(ContinueResponseTiming.IMMEDIATELY);
         } catch (IOException ioe) {
-            container.getLogger().error(sm.getString(
-                    "standardContextValve.acknowledgeException"), ioe);
+            container.getLogger().error(sm.getString("standardContextValve.acknowledgeException"), ioe);
             request.setAttribute(RequestDispatcher.ERROR_EXCEPTION, ioe);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;

@@ -179,8 +179,7 @@ public class CoyoteAdapter implements Adapter {
                     try {
                         oldCL = context.bind(false, null);
                         res.onWritePossible();
-                        if (request.isFinished() && req.sendAllDataReadEvent() &&
-                                readListener != null) {
+                        if (request.isFinished() && req.sendAllDataReadEvent() && readListener != null) {
                             readListener.onAllDataRead();
                         }
                         // User code may have swallowed an IOException
@@ -239,15 +238,12 @@ public class CoyoteAdapter implements Adapter {
             // Has an error occurred during async processing that needs to be
             // processed by the application's error page mechanism (or Tomcat's
             // if the application doesn't define one)?
-            if (!request.isAsyncDispatching() && request.isAsync() &&
-                    response.isErrorReportRequired()) {
-                connector.getService().getContainer().getPipeline().getFirst().invoke(
-                        request, response);
+            if (!request.isAsyncDispatching() && request.isAsync() &&response.isErrorReportRequired()) {
+                connector.getService().getContainer().getPipeline().getFirst().invoke( request, response);
             }
 
             if (request.isAsyncDispatching()) {
-                connector.getService().getContainer().getPipeline().getFirst().invoke(
-                        request, response);
+                connector.getService().getContainer().getPipeline().getFirst().invoke( request, response);
                 Throwable t = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
                 if (t != null) {
                     asyncConImpl.setErrorState(t, true);
@@ -311,8 +307,7 @@ public class CoyoteAdapter implements Adapter {
 
 
     @Override
-    public void service(org.apache.coyote.Request req, org.apache.coyote.Response res)
-            throws Exception {
+    public void service(org.apache.coyote.Request req, org.apache.coyote.Response res) throws Exception {
 
         Request request = (Request) req.getNote(ADAPTER_NOTES);
         Response response = (Response) res.getNote(ADAPTER_NOTES);
@@ -348,14 +343,18 @@ public class CoyoteAdapter implements Adapter {
         try {
             // Parse and set Catalina and configuration specific
             // request parameters
+            /**
+             * 根据请求路径获取对应的servlet
+             */
             postParseSuccess = postParseRequest(req, request, res, response);
             if (postParseSuccess) {
                 //check valves if we support async
-                request.setAsyncSupported(
-                        connector.getService().getContainer().getPipeline().isAsyncSupported());
+                request.setAsyncSupported(connector.getService().getContainer().getPipeline().isAsyncSupported());
                 // Calling the container
-                connector.getService().getContainer().getPipeline().getFirst().invoke(
-                        request, response);
+                /**
+                 * 处理请求
+                 */
+                connector.getService().getContainer().getPipeline().getFirst().invoke( request, response);
             }
             if (request.isAsync()) {
                 async = true;
@@ -707,8 +706,10 @@ public class CoyoteAdapter implements Adapter {
 
         while (mapRequired) {
             // This will map the the latest version by default
-            connector.getService().getMapper().map(serverName, decodedURI,
-                    version, request.getMappingData());
+            /**
+             * 根据请求路径，获取映射的servlet
+             */
+            connector.getService().getMapper().map(serverName, decodedURI,version, request.getMappingData());
 
             // If there is no context at this point, either this is a 404
             // because no ROOT context has been deployed or the URI was invalid
@@ -728,13 +729,10 @@ public class CoyoteAdapter implements Adapter {
             // (if any). Need to do this before we redirect in case we need to
             // include the session id in the redirect
             String sessionID;
-            if (request.getServletContext().getEffectiveSessionTrackingModes()
-                    .contains(SessionTrackingMode.URL)) {
+            if (request.getServletContext().getEffectiveSessionTrackingModes().contains(SessionTrackingMode.URL)) {
 
                 // Get the session ID if there was one
-                sessionID = request.getPathParameter(
-                        SessionConfig.getSessionUriParamName(
-                                request.getContext()));
+                sessionID = request.getPathParameter(SessionConfig.getSessionUriParamName(request.getContext()));
                 if (sessionID != null) {
                     request.setRequestedSessionId(sessionID);
                     request.setRequestedSessionURL(true);
@@ -811,16 +809,12 @@ public class CoyoteAdapter implements Adapter {
         // Possible redirect
         MessageBytes redirectPathMB = request.getMappingData().redirectPath;
         if (!redirectPathMB.isNull()) {
-            String redirectPath = URLEncoder.DEFAULT.encode(
-                    redirectPathMB.toString(), StandardCharsets.UTF_8);
+            String redirectPath = URLEncoder.DEFAULT.encode(redirectPathMB.toString(), StandardCharsets.UTF_8);
             String query = request.getQueryString();
             if (request.isRequestedSessionIdFromURL()) {
                 // This is not optimal, but as this is not very common, it
                 // shouldn't matter
-                redirectPath = redirectPath + ";" +
-                        SessionConfig.getSessionUriParamName(
-                            request.getContext()) +
-                    "=" + request.getRequestedSessionId();
+                redirectPath = redirectPath + ";" +SessionConfig.getSessionUriParamName( request.getContext()) +"=" + request.getRequestedSessionId();
             }
             if (query != null) {
                 // This is not optimal, but as this is not very common, it
@@ -833,8 +827,7 @@ public class CoyoteAdapter implements Adapter {
         }
 
         // Filter trace method
-        if (!connector.getAllowTrace()
-                && req.method().equalsIgnoreCase("TRACE")) {
+        if (!connector.getAllowTrace() && req.method().equalsIgnoreCase("TRACE")) {
             Wrapper wrapper = request.getWrapper();
             String header = null;
             if (wrapper != null) {

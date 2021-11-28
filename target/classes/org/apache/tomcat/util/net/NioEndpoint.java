@@ -476,10 +476,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 channel = nioChannels.pop();
             }
             if (channel == null) {
-                SocketBufferHandler bufHandler = new SocketBufferHandler(
-                        socketProperties.getAppReadBufSize(),
-                        socketProperties.getAppWriteBufSize(),
-                        socketProperties.getDirectBuffer());
+                SocketBufferHandler bufHandler = new SocketBufferHandler(socketProperties.getAppReadBufSize(), socketProperties.getAppWriteBufSize(), socketProperties.getDirectBuffer());
                 if (isSSLEnabled()) {
                     channel = new SecureNioChannel(bufHandler, this);
                 } else {
@@ -589,8 +586,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
 
         @Override
         public String toString() {
-            return "Poller event: socket [" + socketWrapper.getSocket() + "], socketWrapper [" + socketWrapper +
-                    "], interestOps [" + interestOps + "]";
+            return "Poller event: socket [" + socketWrapper.getSocket() + "], socketWrapper [" + socketWrapper + "], interestOps [" + interestOps + "]";
         }
     }
 
@@ -781,15 +777,12 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 try {
                     if (!close) {
                         hasEvents = events();
-                        System.out.println(hasEvents);
                         if (wakeupCounter.getAndSet(-1) > 0) {
                             // If we are here, means we have other stuff to do
                             // Do a non blocking select
                             keyCount = selector.selectNow();
-                            System.out.println(hasEvents);
                         } else {
                             keyCount = selector.select(selectorTimeout);
-                            System.out.println(hasEvents);
                         }
                         wakeupCounter.set(0);
                     }
@@ -806,7 +799,6 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                     // Either we timed out or we woke up, process events first
                     if (keyCount == 0) {
                         hasEvents = (hasEvents | events());
-                        System.out.println(hasEvents);
                     }
                 } catch (Throwable x) {
                     ExceptionUtils.handleThrowable(x);
@@ -815,7 +807,6 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                 }
 
                 Iterator<SelectionKey> iterator = keyCount > 0 ? selector.selectedKeys().iterator() : null;
-                System.out.println(hasEvents);
                 // Walk through the collection of ready keys and dispatch
                 // any active event.
                 while (iterator != null && iterator.hasNext()) {
@@ -1695,8 +1686,7 @@ public class NioEndpoint extends AbstractJsseEndpoint<NioChannel,SocketChannel> 
                         // No TLS handshaking required. Let the handler
                         // process this socket / event combination.
                         handshake = 0;
-                    } else if (event == SocketEvent.STOP || event == SocketEvent.DISCONNECT ||
-                            event == SocketEvent.ERROR) {
+                    } else if (event == SocketEvent.STOP || event == SocketEvent.DISCONNECT || event == SocketEvent.ERROR) {
                         // Unable to complete the TLS handshake. Treat it as
                         // if the handshake failed.
                         handshake = -1;

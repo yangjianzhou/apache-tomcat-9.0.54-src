@@ -133,15 +133,13 @@ public final class ApplicationFilterChain implements FilterChain {
      * @exception ServletException if a servlet exception occurs
      */
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response)
-        throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response) throws IOException, ServletException {
 
         if( Globals.IS_SECURITY_ENABLED ) {
             final ServletRequest req = request;
             final ServletResponse res = response;
             try {
-                java.security.AccessController.doPrivileged(
-                        (java.security.PrivilegedExceptionAction<Void>) () -> {
+                java.security.AccessController.doPrivileged((java.security.PrivilegedExceptionAction<Void>) () -> {
                             internalDoFilter(req,res);
                             return null;
                         }
@@ -163,9 +161,7 @@ public final class ApplicationFilterChain implements FilterChain {
         }
     }
 
-    private void internalDoFilter(ServletRequest request,
-                                  ServletResponse response)
-        throws IOException, ServletException {
+    private void internalDoFilter(ServletRequest request,ServletResponse response) throws IOException, ServletException {
 
         // Call the next filter if there is one
         if (pos < n) {
@@ -173,16 +169,13 @@ public final class ApplicationFilterChain implements FilterChain {
             try {
                 Filter filter = filterConfig.getFilter();
 
-                if (request.isAsyncSupported() && "false".equalsIgnoreCase(
-                        filterConfig.getFilterDef().getAsyncSupported())) {
+                if (request.isAsyncSupported() && "false".equalsIgnoreCase(filterConfig.getFilterDef().getAsyncSupported())) {
                     request.setAttribute(Globals.ASYNC_SUPPORTED_ATTR, Boolean.FALSE);
                 }
                 if( Globals.IS_SECURITY_ENABLED ) {
                     final ServletRequest req = request;
                     final ServletResponse res = response;
-                    Principal principal =
-                        ((HttpServletRequest) req).getUserPrincipal();
-
+                    Principal principal =((HttpServletRequest) req).getUserPrincipal();
                     Object[] args = new Object[]{req, res, this};
                     SecurityUtil.doAsPrivilege ("doFilter", filter, classType, args, principal);
                 } else {
@@ -206,8 +199,7 @@ public final class ApplicationFilterChain implements FilterChain {
             }
 
             if (request.isAsyncSupported() && !servletSupportsAsync) {
-                request.setAttribute(Globals.ASYNC_SUPPORTED_ATTR,
-                        Boolean.FALSE);
+                request.setAttribute(Globals.ASYNC_SUPPORTED_ATTR, Boolean.FALSE);
             }
             // Use potentially wrapped request from this point
             if ((request instanceof HttpServletRequest) &&
@@ -215,14 +207,9 @@ public final class ApplicationFilterChain implements FilterChain {
                     Globals.IS_SECURITY_ENABLED ) {
                 final ServletRequest req = request;
                 final ServletResponse res = response;
-                Principal principal =
-                    ((HttpServletRequest) req).getUserPrincipal();
+                Principal principal = ((HttpServletRequest) req).getUserPrincipal();
                 Object[] args = new Object[]{req, res};
-                SecurityUtil.doAsPrivilege("service",
-                                           servlet,
-                                           classTypeUsedInService,
-                                           args,
-                                           principal);
+                SecurityUtil.doAsPrivilege("service",servlet,classTypeUsedInService, args, principal);
             } else {
                 servlet.service(request, response);
             }
