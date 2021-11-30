@@ -236,13 +236,11 @@ public class AprEndpoint extends AbstractEndpoint<Long,Long> implements SNICallB
     @Override
     public void setMaxConnections(int maxConnections) {
         if (maxConnections == -1) {
-            log.warn(sm.getString("endpoint.apr.maxConnections.unlimited",
-                    Integer.valueOf(getMaxConnections())));
+            log.warn(sm.getString("endpoint.apr.maxConnections.unlimited", Integer.valueOf(getMaxConnections())));
             return;
         }
         if (running) {
-            log.warn(sm.getString("endpoint.apr.maxConnections.running",
-                    Integer.valueOf(getMaxConnections())));
+            log.warn(sm.getString("endpoint.apr.maxConnections.running", Integer.valueOf(getMaxConnections())));
             return;
         }
         super.setMaxConnections(maxConnections);
